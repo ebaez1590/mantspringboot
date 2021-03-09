@@ -5,21 +5,25 @@
  */
 package netb.mantenimiento.mantspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Producto {
+public class Producto implements Serializable {
     
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String nombre;
@@ -27,35 +31,42 @@ public class Producto {
     @Column
     private String descripcion;
 
-    @Column
+    @Column(unique = true)
     private String codigo;
     
-    @Column
+    @Column(unique = true)
     private String codigoAuxiliar;
     
     @Column
     private String imagenUrl;
     
-    @Column
-    private Boolean habilitado;
+    @Column(columnDefinition = "boolean default true")
+    private Boolean habilitado = true;
     
-    @OneToMany(
-        mappedBy = "producto",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
-    private List<BodegaInventario> productos;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
-    private List<DetallesAdicionales> detalles;
+    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference("productoDet")
+    private List<DetallesAdicionales> detallesAdicionales;
+    
+    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
+    @JsonManagedReference("productoArt")
+    private List<ArticuloInventario> articulosInventario;
 
-    public Integer getId() {
+    public Producto() {
+        
+        this.detallesAdicionales = new ArrayList<DetallesAdicionales>();
+    }
+    
+       
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    
     public String getNombre() {
         return nombre;
     }
@@ -104,27 +115,28 @@ public class Producto {
         this.habilitado = habilitado;
     }
 
-    public List<BodegaInventario> getProductos() {
-        return productos;
+    public List<DetallesAdicionales> getDetallesAdicionales() {
+        return detallesAdicionales;
     }
 
-    public void setProductos(List<BodegaInventario> productos) {
-        this.productos = productos;
+    public void setDetallesAdicionales(List<DetallesAdicionales> detallesAdicionales) {
+        this.detallesAdicionales = detallesAdicionales;
     }
 
-    public List<DetallesAdicionales> getDetalles() {
-        return detalles;
+    public List<ArticuloInventario> getArticulosInventario() {
+        return articulosInventario;
     }
 
-    public void setDetalles(List<DetallesAdicionales> detalles) {
-        this.detalles = detalles;
+    public void setArticulosInventario(List<ArticuloInventario> articulosInventario) {
+        this.articulosInventario = articulosInventario;
     }
 
     
-
-    @Override
-    public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", codigo=" + codigo + ", codigoAuxiliar=" + codigoAuxiliar + ", imagenUrl=" + imagenUrl + ", habilitado=" + habilitado + '}';
-    }
     
+    public void addDetallesAdicionales (DetallesAdicionales detalle){
+        detallesAdicionales.add(detalle);
+    }
+
+    
+   
 }

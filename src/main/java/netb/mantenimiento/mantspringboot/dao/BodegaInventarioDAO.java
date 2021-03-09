@@ -7,16 +7,17 @@ package netb.mantenimiento.mantspringboot.dao;
 
 import java.util.List;
 import java.util.Optional;
-import netb.mantenimiento.mantspringboot.model.Producto;
+import netb.mantenimiento.mantspringboot.model.BodegaInventario;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 @Repository
-public interface ProductoDAO extends PagingAndSortingRepository<Producto, Long>{
+public interface BodegaInventarioDAO extends PagingAndSortingRepository<BodegaInventario, Long>{
     
-    @Query("SELECT pr FROM Producto pr where pr.nombre LIKE %:busqueda%")
-    List<Producto> productoPorParametros(@Param("busqueda") Optional<String> busqueda, Pageable page);
+    @Query("SELECT bi FROM BodegaInventario bi where bi.nombre LIKE %:busqueda%")
+    List<BodegaInventario> bodegaInventarioPorParametro(@Param("busqueda") Optional<String> busqueda, Pageable page);
     
 }

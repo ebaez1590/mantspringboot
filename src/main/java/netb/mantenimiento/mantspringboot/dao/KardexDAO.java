@@ -7,16 +7,19 @@ package netb.mantenimiento.mantspringboot.dao;
 
 import java.util.List;
 import java.util.Optional;
-import netb.mantenimiento.mantspringboot.model.Producto;
-import org.springframework.data.domain.Pageable;
+import netb.mantenimiento.mantspringboot.model.Kardex;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 @Repository
-public interface ProductoDAO extends PagingAndSortingRepository<Producto, Long>{
+public interface KardexDAO extends PagingAndSortingRepository<Kardex, Long>{
     
-    @Query("SELECT pr FROM Producto pr where pr.nombre LIKE %:busqueda%")
-    List<Producto> productoPorParametros(@Param("busqueda") Optional<String> busqueda, Pageable page);
+    @Query("SELECT kx FROM Kardex kx where kx.articuloInventario.id =:articulo and kx.fechaCreacion between :fechaInicio and :fechaFin")
+    List<Kardex> buscarKardexPorParametros(
+            @Param("articulo") Optional<String> articulo,
+            @Param("fechaInicio") Optional<String> fechaInicio,
+            @Param("fechaFin") Optional<String> fechaFin);
     
 }

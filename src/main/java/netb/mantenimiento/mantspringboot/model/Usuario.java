@@ -5,56 +5,59 @@
  */
 package netb.mantenimiento.mantspringboot.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario {
+public class Usuario implements Serializable {
     
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column
     private String nombre;
     
-    @Column
+    @Column(unique = true)
     private String cedula;
     
-    @Column
+    @Column(unique = true)
     private String usuario;
     
     @Column
     private String password;
     
-    @Column
-    private Boolean habilitado;
+    @Column(columnDefinition = "boolean default true")
+    private boolean habilitado = true;
     
-    @Column
-    private Boolean gestionaProductos;
+    @Column(columnDefinition = "boolean default false")
+    private boolean gestionaProductos = false;
     
-    @Column
-    private Boolean gestionaBodegas;
+    @Column(columnDefinition = "boolean default false")
+    private boolean gestionaBodegas = false;
     
-    @Column
-    private Boolean gestionaDepartamentos;
+    @Column(columnDefinition = "boolean default false")
+    private boolean gestionaDepartamentos = false;
     
-    @Column
-    private Boolean gestionaInventario;
+    @Column(columnDefinition = "boolean default false")
+    private boolean gestionaInventario = false;
     
-    @Column
-    private Boolean daMantenimiento;
+    @Column(columnDefinition = "boolean default false")
+    private boolean daMantenimiento = false;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+        
     public String getNombre() {
         return nombre;
     }
@@ -87,51 +90,51 @@ public class Usuario {
         this.password = password;
     }
 
-    public Boolean getHabilitado() {
+    public boolean isHabilitado() {
         return habilitado;
     }
 
-    public void setHabilitado(Boolean habilitado) {
+    public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
     }
 
-    public Boolean getGestionaProductos() {
+    public boolean isGestionaProductos() {
         return gestionaProductos;
     }
 
-    public void setGestionaProductos(Boolean gestionaProductos) {
+    public void setGestionaProductos(boolean gestionaProductos) {
         this.gestionaProductos = gestionaProductos;
     }
 
-    public Boolean getGestionaBodegas() {
+    public boolean isGestionaBodegas() {
         return gestionaBodegas;
     }
 
-    public void setGestionaBodegas(Boolean gestionaBodegas) {
+    public void setGestionaBodegas(boolean gestionaBodegas) {
         this.gestionaBodegas = gestionaBodegas;
     }
 
-    public Boolean getGestionaDepartamentos() {
+    public boolean isGestionaDepartamentos() {
         return gestionaDepartamentos;
     }
 
-    public void setGestionaDepartamentos(Boolean gestionaDepartamentos) {
+    public void setGestionaDepartamentos(boolean gestionaDepartamentos) {
         this.gestionaDepartamentos = gestionaDepartamentos;
     }
 
-    public Boolean getGestionaInventario() {
+    public boolean isGestionaInventario() {
         return gestionaInventario;
     }
 
-    public void setGestionaInventario(Boolean gestionaInventario) {
+    public void setGestionaInventario(boolean gestionaInventario) {
         this.gestionaInventario = gestionaInventario;
     }
 
-    public Boolean getDaMantenimiento() {
+    public boolean isDaMantenimiento() {
         return daMantenimiento;
     }
 
-    public void setDaMantenimiento(Boolean daMantenimiento) {
+    public void setDaMantenimiento(boolean daMantenimiento) {
         this.daMantenimiento = daMantenimiento;
     }
 
@@ -139,6 +142,6 @@ public class Usuario {
     public String toString() {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", cedula=" + cedula + ", usuario=" + usuario + ", password=" + password + ", habilitado=" + habilitado + ", gestionaProductos=" + gestionaProductos + ", gestionaBodegas=" + gestionaBodegas + ", gestionaDepartamentos=" + gestionaDepartamentos + ", gestionaInventario=" + gestionaInventario + ", daMantenimiento=" + daMantenimiento + '}';
     }
-    
+
     
 }

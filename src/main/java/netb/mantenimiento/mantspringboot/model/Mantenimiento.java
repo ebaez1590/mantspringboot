@@ -5,26 +5,26 @@
  */
 package netb.mantenimiento.mantspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table
-public class Mantenimiento {
+public class Mantenimiento implements Serializable {
     
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column
     private String nombreTecnico;
@@ -34,6 +34,9 @@ public class Mantenimiento {
     
     @Column
     private String nombre;
+    
+    @Column
+    private String descripcion;
     
     @Column
     private String estado;
@@ -50,28 +53,26 @@ public class Mantenimiento {
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
     
-     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(
-            name = "producto_id",
-            referencedColumnName = "producto_id"),
-        @JoinColumn(
-            name = "departamento_id",
-            referencedColumnName = "departamento_id"),
-        @JoinColumn(
-            name = "bodega_id",
-            referencedColumnName = "bodega_id")
-    })
-    private BodegaInventario bodegaInventario;
+    @Column     
+    private String tipoMantenimiento;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_art_invent", nullable = false)
+    @JsonBackReference("articuloInvM")
+    private ArticuloInventario articuloInventario;
 
-    public Integer getId() {
+    public Mantenimiento() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+        
     public String getNombreTecnico() {
         return nombreTecnico;
     }
@@ -128,13 +129,30 @@ public class Mantenimiento {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public BodegaInventario getBodegaInventario() {
-        return bodegaInventario;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setBodegaInventario(BodegaInventario bodegaInventario) {
-        this.bodegaInventario = bodegaInventario;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
+
+    public String getTipoMantenimiento() {
+        return tipoMantenimiento;
+    }
+
+    public void setTipoMantenimiento(String tipoMantenimiento) {
+        this.tipoMantenimiento = tipoMantenimiento;
+    }
+
+    public ArticuloInventario getArticuloInventario() {
+        return articuloInventario;
+    }
+
+    public void setArticuloInventario(ArticuloInventario articuloInventario) {
+        this.articuloInventario = articuloInventario;
+    }
+
     
     
     

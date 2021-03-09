@@ -5,103 +5,64 @@
  */
 package netb.mantenimiento.mantspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table
-public class BodegaInventario {
+public class BodegaInventario implements Serializable {
     
-    @EmbeddedId
-    private BodegaInventarioId id;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("prodId")
-    private Producto producto;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("bodId")
-    private Bodega bodega;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("deptId")
-    private Departamento departamento;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+   
     @Column
     private String nombre;
     
     @Column
     private String descripcion;
     
-    @NaturalId
-    @Column(nullable = false, unique = true)
+    @Column
     private String codigo;
     
+    @Column(columnDefinition = "boolean default true")
+    private Boolean habilitado = true;
+    
     @Column
-    private String codigoAuxiliar;
+    private String direccion;
     
-    @Column 
-    private Boolean habilitado;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_departamento", nullable = false)
+    @JsonBackReference("departamentoBod")
+     private Departamento departamento;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bodegaInventario")
-    private List<Mantenimiento> mantenimiento;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipo_bodega", nullable = false)
+    @JsonBackReference("tipoBodegaBI")
+    private TipoBodega tipoBodega;
     
-    private BodegaInventario (){}
+    @OneToMany(mappedBy = "bodegaInventario", fetch = FetchType.LAZY)
+    @JsonManagedReference("bodegaArt")
+    private List<ArticuloInventario> articulosInventario;
+   
+    public BodegaInventario (){}
 
-    public BodegaInventario(BodegaInventarioId id, Producto producto, Bodega bodega, Departamento departamento, String nombre, String descripcion, String codigo, String codigoAuxiliar, Boolean habilitado, List<Mantenimiento> mantenimiento) {
-        this.id = id;
-        this.producto = producto;
-        this.bodega = bodega;
-        this.departamento = departamento;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.codigo = codigo;
-        this.codigoAuxiliar = codigoAuxiliar;
-        this.habilitado = habilitado;
-        this.mantenimiento = mantenimiento;
-    }
-
-    
-
-    public BodegaInventarioId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BodegaInventarioId id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public Bodega getBodega() {
-        return bodega;
-    }
-
-    public void setBodega(Bodega bodega) {
-        this.bodega = bodega;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
     }
 
     public String getNombre() {
@@ -128,13 +89,6 @@ public class BodegaInventario {
         this.codigo = codigo;
     }
 
-    public String getCodigoAuxiliar() {
-        return codigoAuxiliar;
-    }
-
-    public void setCodigoAuxiliar(String codigoAuxiliar) {
-        this.codigoAuxiliar = codigoAuxiliar;
-    }
 
     public Boolean getHabilitado() {
         return habilitado;
@@ -144,30 +98,39 @@ public class BodegaInventario {
         this.habilitado = habilitado;
     }
 
-    public List<Mantenimiento> getMantenimiento() {
-        return mantenimiento;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setMantenimiento(List<Mantenimiento> mantenimiento) {
-        this.mantenimiento = mantenimiento;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public TipoBodega getTipoBodega() {
+        return tipoBodega;
+    }
+
+    public void setTipoBodega(TipoBodega tipoBodega) {
+        this.tipoBodega = tipoBodega;
+    }
+
+    public List<ArticuloInventario> getArticulosInventario() {
+        return articulosInventario;
+    }
+
+    public void setArticulosInventario(List<ArticuloInventario> articulosInventario) {
+        this.articulosInventario = articulosInventario;
+    }
+
     
     
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
- 
-        if (o == null || getClass() != o.getClass())
-            return false;
- 
-        BodegaInventario that = (BodegaInventario) o;
-        return Objects.equals(producto, that.producto) &&
-               Objects.equals(bodega, that.bodega) && Objects.equals(departamento, that.departamento);
-    }
- 
-    @Override
-    public int hashCode() {
-        return Objects.hash(producto, bodega, departamento);
-    }
     
 }

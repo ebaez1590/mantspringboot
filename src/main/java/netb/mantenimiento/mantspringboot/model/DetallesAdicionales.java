@@ -5,10 +5,13 @@
  */
 package netb.mantenimiento.mantspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,11 +19,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class DetallesAdicionales {
+public class DetallesAdicionales implements Serializable {
     
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column
     private String llave;
@@ -29,17 +32,20 @@ public class DetallesAdicionales {
     private String valor;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prod_id")
+    @JoinColumn(name = "id_producto", nullable = false)
+    @JsonBackReference("productoDet")
     private Producto producto;
-
-    public Integer getId() {
+    
+    
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    
     public String getLlave() {
         return llave;
     }
@@ -70,5 +76,7 @@ public class DetallesAdicionales {
     }
     
     
+
     
+  
 }

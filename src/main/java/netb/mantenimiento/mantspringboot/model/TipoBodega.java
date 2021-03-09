@@ -17,28 +17,30 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Departamento implements Serializable {
-
+public class TipoBodega implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @Column
     private String nombre;
-
+    
     @Column
     private String descripcion;
-
-    @Column(unique = true)
-    String codigo;
-
+    
     @Column(columnDefinition = "boolean default true")
     private boolean habilitado = true;
     
-    @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY)
-    @JsonManagedReference("departamentoBod")
-    private List<BodegaInventario> bodegaInventarios;
+    @Column(columnDefinition = "boolean default false")
+    private boolean esMantenimiento = false;
     
+    @OneToMany(mappedBy = "tipoBodega", fetch = FetchType.LAZY)
+    @JsonManagedReference("tipoBodegaBI")
+    private List<BodegaInventario> bodegaInventarios;
+
+    public TipoBodega() {
+    }
 
     public Long getId() {
         return id;
@@ -48,7 +50,6 @@ public class Departamento implements Serializable {
         this.id = id;
     }
 
-    
     public String getNombre() {
         return nombre;
     }
@@ -65,20 +66,20 @@ public class Departamento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     public boolean isHabilitado() {
         return habilitado;
     }
 
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
+    }
+
+    public boolean isEsMantenimiento() {
+        return esMantenimiento;
+    }
+
+    public void setEsMantenimiento(boolean esMantenimiento) {
+        this.esMantenimiento = esMantenimiento;
     }
 
     public List<BodegaInventario> getBodegaInventarios() {
@@ -88,11 +89,5 @@ public class Departamento implements Serializable {
     public void setBodegaInventarios(List<BodegaInventario> bodegaInventarios) {
         this.bodegaInventarios = bodegaInventarios;
     }
-
-          
-    @Override
-    public String toString() {
-        return "Departamento{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", codigo=" + codigo + ", habilitado=" + habilitado + '}';
-    }
-
+    
 }

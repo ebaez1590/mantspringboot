@@ -5,10 +5,10 @@
  */
 package netb.mantenimiento.mantspringboot.rest;
 
-import java.util.List;
 import java.util.Optional;
-import netb.mantenimiento.mantspringboot.model.Producto;
-import netb.mantenimiento.mantspringboot.servicios.ProductoServicio;
+import netb.mantenimiento.mantspringboot.model.TipoBodega;
+import netb.mantenimiento.mantspringboot.servicios.TipoBodegaServicio;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,47 +24,47 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("productos")
-public class ProductoRest {
+@RequestMapping("tipo-bodega")
+public class TipoBodegaRest {
 
     @Autowired
-    private ProductoServicio productoServicio;
+    private TipoBodegaServicio tipoBodegaServicio;
 
-    @PostMapping("/guardar")
-    public Boolean guardar(@RequestBody Producto producto) {
-        System.out.println("Producto entrante: " + producto.toString());
+    @PostMapping
+    public Boolean guardar(@RequestBody TipoBodega tipoBodega) {
+        System.out.println("TipoBdega entrante: " + tipoBodega.toString());
         try {
-            return productoServicio.guardarProducto(producto);
+            return tipoBodegaServicio.guardarTipoBodega(tipoBodega);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el producto", ex);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el tipo Bodega", ex);
         }
     }
 
-    @PostMapping("/actualizar")
-    public Boolean actualizar(@RequestBody Producto producto) {
-        System.out.println("Producto entrante: " + producto.toString());
+    @PutMapping
+    public Boolean actualizar(@RequestBody TipoBodega tipoBodega) {
+        System.out.println("TipoBdega entrante: " + tipoBodega.toString());
         try {
-            return productoServicio.actualizarProducto(producto);
+            return tipoBodegaServicio.guardarTipoBodega(tipoBodega);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible actualizar el producto", ex);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el tipo Bodega", ex);
         }
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping
     public Boolean eliminar(@PathVariable("id") Long id) {
-        System.out.println("Producto a eliminar: " + id);
+        System.out.println("Tipo Bodega a eliminar: " + id);
         try {
-            return productoServicio.eliminarProductoPorId(id);
+            return tipoBodegaServicio.eliminarTipoBodegaPorId(id);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible eliminar el producto", ex);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible eliminar el TipoBodega", ex);
         }
     }
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Producto>> listar(@RequestParam Optional<String> busqueda,
+    @GetMapping
+    public ResponseEntity<RespuestaServicio> listar(@RequestParam Optional<String> busqueda,
             @RequestParam Optional<String> skip,
             @RequestParam Optional<String> take) {
-        List<Producto> productosRecuperados;
+        RespuestaServicio<TipoBodega> tiposBodegaRecuperados;
         try {
             String skipCast = "0";
             String takeCast = "10";
@@ -75,8 +76,8 @@ public class ProductoRest {
             if (take.isPresent()) {
                 takeCast = take.get();
             }
-            productosRecuperados = productoServicio.productoPorParametros(busqueda, skipCast, takeCast);
-            return ResponseEntity.status(HttpStatus.OK).body(productosRecuperados);
+            tiposBodegaRecuperados = tipoBodegaServicio.tipoBodegaPorParametros(busqueda, skipCast, takeCast);
+            return ResponseEntity.status(HttpStatus.OK).body(tiposBodegaRecuperados);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
         }
