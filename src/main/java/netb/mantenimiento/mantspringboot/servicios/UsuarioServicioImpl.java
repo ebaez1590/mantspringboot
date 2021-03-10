@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.dao.UsuarioDAO;
 import netb.mantenimiento.mantspringboot.model.Usuario;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -64,14 +65,18 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
-    public List<Usuario> listarPorParametros(Optional<String> busqueda, String skip, String take) throws Exception {
+    public RespuestaServicio<Usuario> listarPorParametros(Optional<String> busqueda, String skip, String take) throws Exception {
         Pageable sortedById = PageRequest.of(Integer.parseInt(skip), Integer.parseInt(take), Sort.by("id").descending());
-        List<Usuario> listUsuarios = usuarioDAO.usuariosPorParametros(busqueda, sortedById);
-        if (null != listUsuarios && listUsuarios.size() > 0) {
-            return listUsuarios;
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Existen Usuarios");
-        }
+        RespuestaServicio<Usuario> respuestaServicio = new RespuestaServicio<Usuario>();
+        List<Usuario> listUsuarios = null;
+        
+        if(busqueda.isPresent()){
+            listUsuarios = usuarioDAO.usuariosPorParametros(busqueda, sortedById);
+            respuestaServicio.setListaObjetos(listUsuarios);
+            respuestaServicio.setCantidadRegistros(usuarioDAO.count());
+            return respuestaServicio;
+        }else return null;
+
     }
 
     @Override

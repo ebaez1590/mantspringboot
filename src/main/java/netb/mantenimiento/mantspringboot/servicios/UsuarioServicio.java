@@ -8,6 +8,7 @@ package netb.mantenimiento.mantspringboot.servicios;
 import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Usuario;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 
 
 public interface UsuarioServicio {
@@ -22,7 +23,7 @@ public interface UsuarioServicio {
     
     List<Usuario> listarTodos () throws Exception;
     
-    List<Usuario> listarPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
+    RespuestaServicio<Usuario> listarPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
     
     Usuario loginUsuario (String usuario, String password) throws Exception;
 }

@@ -10,6 +10,7 @@ import java.util.Optional;
 import netb.mantenimiento.mantspringboot.dao.ProductoDAO;
 import netb.mantenimiento.mantspringboot.model.DetallesAdicionales;
 import netb.mantenimiento.mantspringboot.model.Producto;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -63,14 +64,16 @@ public class ProductoServicioImpl implements ProductoServicio {
     }
 
     @Override
-    public List<Producto> productoPorParametros(Optional<String> busqueda, String skip, String take) throws Exception {
+    public RespuestaServicio<Producto> productoPorParametros(Optional<String> busqueda, String skip, String take) throws Exception {
         Pageable sortedById = PageRequest.of(Integer.parseInt(skip), Integer.parseInt(take), Sort.by("id").descending());
-        List<Producto> listProductos = productoDAO.productoPorParametros(busqueda, sortedById);
-        if (null != listProductos && listProductos.size() > 0) {
-            return listProductos;
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Existen Productos");
-        }
+        RespuestaServicio<Producto> respuestaServicio = new RespuestaServicio<Producto>();
+        List<Producto> listProductos = null;
+        if(busqueda.isPresent()){
+            listProductos = productoDAO.productoPorParametros(busqueda, sortedById);
+            respuestaServicio.setListaObjetos(listProductos);
+            respuestaServicio.setCantidadRegistros(productoDAO.count());
+            return respuestaServicio;
+        }else return null;
     }
 
 }

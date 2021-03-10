@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Usuario;
 import netb.mantenimiento.mantspringboot.servicios.UsuarioServicio;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,11 +74,11 @@ public class UsuarioRest {
     }*/
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Usuario>> listar(
+    public ResponseEntity<RespuestaServicio> listar(
             @RequestParam Optional<String> busqueda,
             @RequestParam Optional<String> skip,
             @RequestParam Optional<String> take) {
-        List<Usuario> usuariosRecuperados;
+        RespuestaServicio<Usuario> usuariosRecuperados;
         try {
             String skipCast = "0";
             String takeCast = "10";

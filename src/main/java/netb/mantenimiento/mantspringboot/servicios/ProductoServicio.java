@@ -8,6 +8,7 @@ package netb.mantenimiento.mantspringboot.servicios;
 import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Producto;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 
 public interface ProductoServicio {
     
@@ -19,7 +20,7 @@ public interface ProductoServicio {
     
     List<Producto> listarTodos() throws Exception;
     
-    List<Producto> productoPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
+    RespuestaServicio<Producto> productoPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
     
     
     
