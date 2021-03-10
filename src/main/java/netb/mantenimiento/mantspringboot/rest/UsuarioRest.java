@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,7 @@ public class UsuarioRest {
     /*@Autowired
     private UsuarioDAO usuarioDAO;*/
 
-    @PostMapping("/guardar")
+    @PostMapping
     public Boolean guardar(@RequestBody Usuario usuario) {
         System.out.println("Usuario entrante: " + usuario.toString());
         try {
@@ -42,7 +43,7 @@ public class UsuarioRest {
         }
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping
     public Boolean actualizar(@RequestBody Usuario usuario) {
         System.out.println("Usuario entrante: " + usuario.toString());
         try {
@@ -62,14 +63,14 @@ public class UsuarioRest {
         }
     }
 
-    @GetMapping("/{cedulaUsuario}")
+    /*@GetMapping("/{cedulaUsuario}")
     public Usuario recuperarPorCedula(@PathVariable String cedulaUsuario) {
         try {
             return usuarioServicio.buscarPorCedulaUsuario(cedulaUsuario);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se ha encontrado usuario", ex);
         }
-    }
+    }*/
 
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> listar(
