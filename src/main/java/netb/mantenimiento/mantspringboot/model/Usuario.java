@@ -14,40 +14,43 @@ import javax.persistence.Id;
 
 @Entity
 public class Usuario implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column
     private String nombre;
-    
+
     @Column(unique = true)
     private String cedula;
-    
+
     @Column(unique = true)
     private String usuario;
-    
+
     @Column
     private String password;
-    
+
     @Column(columnDefinition = "boolean default true")
     private boolean habilitado = true;
-    
+
     @Column(columnDefinition = "boolean default false")
     private boolean gestionaProductos = false;
-    
+
     @Column(columnDefinition = "boolean default false")
     private boolean gestionaBodegas = false;
-    
+
     @Column(columnDefinition = "boolean default false")
     private boolean gestionaDepartamentos = false;
-    
+
     @Column(columnDefinition = "boolean default false")
     private boolean gestionaInventario = false;
-    
+
     @Column(columnDefinition = "boolean default false")
     private boolean daMantenimiento = false;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean verReporte = false;
 
     public Long getId() {
         return id;
@@ -57,7 +60,6 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-        
     public String getNombre() {
         return nombre;
     }
@@ -138,10 +140,19 @@ public class Usuario implements Serializable {
         this.daMantenimiento = daMantenimiento;
     }
 
+    public boolean isVerReporte() {
+        return verReporte;
+    }
+
+    public void setVerReporte(boolean verReporte) {
+        this.verReporte = verReporte;
+    }
+
+    
+    
     @Override
     public String toString() {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", cedula=" + cedula + ", usuario=" + usuario + ", password=" + password + ", habilitado=" + habilitado + ", gestionaProductos=" + gestionaProductos + ", gestionaBodegas=" + gestionaBodegas + ", gestionaDepartamentos=" + gestionaDepartamentos + ", gestionaInventario=" + gestionaInventario + ", daMantenimiento=" + daMantenimiento + '}';
     }
 
-    
 }
