@@ -31,26 +31,26 @@ public class Usuario implements Serializable {
     @Column
     private String password;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean habilitado = true;
+    @Column
+    private boolean habilitado;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean gestionaProductos = false;
+    @Column
+    private boolean gestionaProductos;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean gestionaBodegas = false;
+    @Column
+    private boolean gestionaBodegas;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean gestionaDepartamentos = false;
+    @Column
+    private boolean gestionaDepartamentos;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean gestionaInventario = false;
+    @Column
+    private boolean gestionaInventario;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean daMantenimiento = false;
+    @Column
+    private boolean daMantenimiento;
     
-    @Column(columnDefinition = "boolean default false")
-    private boolean verReporte = false;
+    @Column
+    private boolean verReporte;
 
     public Long getId() {
         return id;
