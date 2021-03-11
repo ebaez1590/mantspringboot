@@ -48,6 +48,9 @@ public class Usuario implements Serializable {
     
     @Column(columnDefinition = "boolean default false")
     private boolean daMantenimiento = false;
+    
+    @Column(columnDefinition = "boolean default false")
+    private boolean verReporte = false;
 
     public Long getId() {
         return id;
@@ -137,6 +140,16 @@ public class Usuario implements Serializable {
     public void setDaMantenimiento(boolean daMantenimiento) {
         this.daMantenimiento = daMantenimiento;
     }
+
+    public boolean isVerReporte() {
+        return verReporte;
+    }
+
+    public void setVerReporte(boolean verReporte) {
+        this.verReporte = verReporte;
+    }
+    
+    
 
     @Override
     public String toString() {

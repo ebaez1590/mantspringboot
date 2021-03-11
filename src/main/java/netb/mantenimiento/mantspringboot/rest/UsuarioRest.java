@@ -13,6 +13,7 @@ import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ public class UsuarioRest {
     private UsuarioDAO usuarioDAO;*/
 
     @PostMapping
+    @CrossOrigin
     public Boolean guardar(@RequestBody Usuario usuario) {
         System.out.println("Usuario entrante: " + usuario.toString());
         try {
