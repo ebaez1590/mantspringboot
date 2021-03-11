@@ -48,6 +48,9 @@ public class Usuario implements Serializable {
 
     @Column(columnDefinition = "boolean default false")
     private boolean daMantenimiento = false;
+    
+    @Column(columnDefinition = "boolean default false")
+    private boolean verReporte = false;
 
     @Column(columnDefinition = "boolean default false")
     private boolean verReporte = false;
@@ -148,8 +151,6 @@ public class Usuario implements Serializable {
         this.verReporte = verReporte;
     }
 
-    
-    
     @Override
     public String toString() {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", cedula=" + cedula + ", usuario=" + usuario + ", password=" + password + ", habilitado=" + habilitado + ", gestionaProductos=" + gestionaProductos + ", gestionaBodegas=" + gestionaBodegas + ", gestionaDepartamentos=" + gestionaDepartamentos + ", gestionaInventario=" + gestionaInventario + ", daMantenimiento=" + daMantenimiento + '}';
