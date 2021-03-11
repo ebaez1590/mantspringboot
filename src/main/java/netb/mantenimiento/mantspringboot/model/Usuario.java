@@ -52,9 +52,6 @@ public class Usuario implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private boolean verReporte = false;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean verReporte = false;
-
     public Long getId() {
         return id;
     }
