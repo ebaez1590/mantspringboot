@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArticuloInventarioDAO extends PagingAndSortingRepository<ArticuloInventario, Long>{
     
-    @Query("SELECT bi FROM BodegaInventario bi where bi.nombre LIKE %:busqueda%")
+    @Query("SELECT ar FROM ArticuloInventario ar where ar.nombre LIKE %:busqueda%")
     List<ArticuloInventario> articuloInventarioPorParametro(@Param("busqueda") Optional<String> busqueda, Pageable page);
     
 }
