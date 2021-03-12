@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Mantenimiento implements Serializable {
@@ -43,14 +44,17 @@ public class Mantenimiento implements Serializable {
     
     @Column
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaIngreso;
     
     @Column
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaIniciaMantenimiento;
     
     @Column
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaEntrega;
     
     @Column     

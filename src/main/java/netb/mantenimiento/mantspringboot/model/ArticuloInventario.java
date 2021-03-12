@@ -43,7 +43,7 @@ public class ArticuloInventario implements Serializable {
     @Column
     private String codigoAuxiliar;
     
-    @Column(columnDefinition = "boolean default true")
+    @Column
     private Boolean habilitado;
     
     @ManyToOne(fetch = FetchType.LAZY)

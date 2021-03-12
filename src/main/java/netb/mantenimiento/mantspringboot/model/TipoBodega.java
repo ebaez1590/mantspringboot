@@ -29,11 +29,11 @@ public class TipoBodega implements Serializable {
     @Column
     private String descripcion;
     
-    @Column(columnDefinition = "boolean default true")
-    private boolean habilitado = true;
+    @Column
+    private boolean habilitado;
     
-    @Column(columnDefinition = "boolean default false")
-    private boolean esMantenimiento = false;
+    @Column
+    private boolean esMantenimiento;
     
     @OneToMany(mappedBy = "tipoBodega", fetch = FetchType.LAZY)
     @JsonManagedReference("tipoBodegaBI")

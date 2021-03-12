@@ -32,8 +32,8 @@ public class Departamento implements Serializable {
     @Column(unique = true)
     String codigo;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean habilitado = true;
+    @Column
+    private boolean habilitado;
     
     @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY)
     @JsonManagedReference("departamentoBod")

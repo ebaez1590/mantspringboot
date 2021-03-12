@@ -35,8 +35,8 @@ public class BodegaInventario implements Serializable {
     @Column
     private String codigo;
     
-    @Column(columnDefinition = "boolean default true")
-    private Boolean habilitado = true;
+    @Column
+    private Boolean habilitado;
     
     @Column
     private String direccion;

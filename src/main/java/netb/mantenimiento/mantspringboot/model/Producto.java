@@ -40,8 +40,8 @@ public class Producto implements Serializable {
     @Column
     private String imagenUrl;
     
-    @Column(columnDefinition = "boolean default true")
-    private Boolean habilitado = true;
+    @Column
+    private Boolean habilitado;
     
     
     @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
