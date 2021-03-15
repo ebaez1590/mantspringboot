@@ -5,6 +5,7 @@
  */
 package netb.mantenimiento.mantspringboot.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Kardex;
@@ -16,10 +17,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface KardexDAO extends PagingAndSortingRepository<Kardex, Long>{
     
-    @Query("SELECT kx FROM Kardex kx where kx.articuloInventario.id =:articulo and kx.fechaCreacion between :fechaInicio and :fechaFin")
+    @Query("SELECT kx FROM Kardex kx where kx.fechaCreacion between :fechaInicio and :fechaFin and "
+            + "(:busqueda is null or kx.articuloInventario.id = :busqueda)")
     List<Kardex> buscarKardexPorParametros(
-            @Param("articulo") Optional<String> articulo,
-            @Param("fechaInicio") Optional<String> fechaInicio,
-            @Param("fechaFin") Optional<String> fechaFin);
+            @Param("fechaInicio") Date fechaInicio,
+            @Param("fechaFin") Date fechaFin,
+            @Param("busqueda") Optional<Long> busqueda
+            );
     
 }

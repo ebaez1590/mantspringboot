@@ -5,6 +5,7 @@
  */
 package netb.mantenimiento.mantspringboot.servicios;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.dao.KardexDAO;
@@ -26,14 +27,13 @@ public class KardexServicioImpl implements KardexServicio{
     }
 
     @Override
-    public RespuestaServicio<Kardex> buscarKardexPorParametros(Optional<String> articulo, Optional<String> fechaInicio, Optional<String> fechaFin) throws Exception {
+    public RespuestaServicio<Kardex> buscarKardexPorParametros(Date fechaInicio, Date fechaFin, Optional<Long> busqueda) throws Exception {
         RespuestaServicio<Kardex> respuestaServicio = new RespuestaServicio<Kardex>();
         List<Kardex> listKardex = null;
-        if(articulo.isPresent() && fechaInicio.isPresent() && fechaFin.isPresent()){
-            listKardex = kardexDAO.buscarKardexPorParametros(articulo, fechaInicio, fechaFin);
+        listKardex = kardexDAO.buscarKardexPorParametros(fechaInicio, fechaFin, busqueda);
             respuestaServicio.setListaObjetos(listKardex);
+            respuestaServicio.setCantidadRegistros(kardexDAO.count());
             return respuestaServicio;
-        }else return null;
         
     }
     

@@ -59,8 +59,8 @@ public class MantenimientoRest {
             @RequestParam Optional<String> cedulaTecnico) {
         List<Mantenimiento> reporteMantenimientos;
         try {
-            Date fechaIniCast = new SimpleDateFormat("yyyy-MM-dd").parse(fechaInicio);
-            Date fechaFinCast = new SimpleDateFormat("yyyy-MM-dd").parse(fechaFin);
+            Date fechaIniCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaInicio);
+            Date fechaFinCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaFin);
             
             reporteMantenimientos = mantenimientoServicio.reportesMantenimiento(fechaIniCast, fechaFinCast, articulo, estado, cedulaTecnico);
             System.out.println("Reporte: " + reporteMantenimientos.get(0).getArticuloInventario().getNombre());

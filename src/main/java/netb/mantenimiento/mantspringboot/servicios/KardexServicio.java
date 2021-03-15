@@ -5,6 +5,7 @@
  */
 package netb.mantenimiento.mantspringboot.servicios;
 
+import java.util.Date;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Kardex;
 import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
@@ -13,6 +14,6 @@ import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 public interface KardexServicio {
     Boolean ingresosEgresos (Kardex kardex) throws Exception;
     
-    RespuestaServicio<Kardex> buscarKardexPorParametros(Optional<String> articulo, Optional<String> fechaInicio, Optional<String> fechaFin) throws Exception;
+    RespuestaServicio<Kardex> buscarKardexPorParametros(Date fechaInicio, Date fechaFin, Optional<Long> busqueda) throws Exception;
     
 }

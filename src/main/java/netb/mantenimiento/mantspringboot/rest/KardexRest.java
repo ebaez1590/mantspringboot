@@ -5,6 +5,8 @@
  */
 package netb.mantenimiento.mantspringboot.rest;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.ArticuloInventario;
 import netb.mantenimiento.mantspringboot.model.Kardex;
@@ -24,10 +26,10 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("kardex")
 public class KardexRest {
-    
+
     @Autowired
     private KardexServicio kardexServicio;
-    
+
     @PostMapping
     public Boolean guardar(@RequestBody Kardex kardex) {
         System.out.println("kardex entrante: " + kardex.toString());
@@ -37,20 +39,22 @@ public class KardexRest {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el Kardex", ex);
         }
     }
-    
+
     @GetMapping
-    public ResponseEntity<RespuestaServicio> reporteInventario(@RequestParam Optional<String> articulo,
-            @RequestParam Optional<String> fechaInicio,
-            @RequestParam Optional<String> fechaFin) {
+    public ResponseEntity<RespuestaServicio> reporteInventario(
+            @RequestParam String fechaInicio,
+            @RequestParam String fechaFin,
+            @RequestParam Optional<Long> busqueda) {
         RespuestaServicio<Kardex> reporteKardex;
         try {
-            
-            reporteKardex = kardexServicio.buscarKardexPorParametros(articulo, fechaInicio, fechaFin);
+            Date fechaIniCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaInicio);
+            Date fechaFinCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaFin);
+            reporteKardex = kardexServicio.buscarKardexPorParametros(fechaIniCast, fechaFinCast, busqueda);
             return ResponseEntity.status(HttpStatus.OK).body(reporteKardex);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
         }
 
     }
-    
+
 }
