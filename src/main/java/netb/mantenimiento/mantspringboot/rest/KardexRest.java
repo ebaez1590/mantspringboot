@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.ArticuloInventario;
 import netb.mantenimiento.mantspringboot.model.Kardex;
+import netb.mantenimiento.mantspringboot.servicios.ArticuloInventarioServicio;
 import netb.mantenimiento.mantspringboot.servicios.KardexServicio;
 import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,35 @@ public class KardexRest {
     @Autowired
     private KardexServicio kardexServicio;
 
+    @Autowired
+    private ArticuloInventarioServicio articuloInventarioServicio;
+
     @PostMapping
     public Boolean guardar(@RequestBody Kardex kardex) {
         System.out.println("kardex entrante: " + kardex.toString());
+        Boolean actualiza = false;
         try {
-            return kardexServicio.ingresosEgresos(kardex);
+            if (null != (kardex.getArticuloInventario()) && null != (kardex.getArticuloInventario().getId())) {
+                Long idArtInv = kardex.getArticuloInventario().getId();
+                Integer stock = kardex.getCantidad();
+                kardexServicio.ingresosEgresos(kardex);
+                ArticuloInventario articuloAux = articuloInventarioServicio.obtenerPorId(idArtInv).get();
+                if (null != articuloAux) {
+                    System.out.println("Articulo Inventario Recuperado: " + articuloAux.toString());
+                    if (kardex.getSuma()) {
+                        articuloAux.setStock(Integer.sum(articuloAux.getStock(), stock));
+                    }else {
+                        articuloAux.setStock(articuloAux.getStock() - stock);
+                    }
+                    
+                    System.out.println("Articulo Inventario Modificado: " + articuloAux.toString());
+                    articuloInventarioServicio.actualizarArticuloInventario(articuloAux);
+                    actualiza = true;
+                }
+
+            }
+            return actualiza;
+
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el Kardex", ex);
         }

@@ -18,4 +18,6 @@ public interface ArticuloInventarioServicio {
     
     RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
     
+    Optional<ArticuloInventario> obtenerPorId (Long id) throws Exception;
+    
 }

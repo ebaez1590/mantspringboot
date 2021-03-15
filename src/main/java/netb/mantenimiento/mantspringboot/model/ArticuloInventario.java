@@ -160,6 +160,13 @@ public class ArticuloInventario implements Serializable {
         mantenimientos.add(mantenimiento);
     }
 
+    @Override
+    public String toString() {
+        return "ArticuloInventario{" + "id=" + id + ", nombre=" + nombre + ", stock=" + stock + ", descripcion=" + descripcion + ", codigo=" + codigo + ", codigoAuxiliar=" + codigoAuxiliar + ", habilitado=" + habilitado + '}';
+    }
+    
+    
+
     
     
 

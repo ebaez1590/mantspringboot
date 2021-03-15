@@ -48,5 +48,10 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
             return null;
         }
     }
+
+    @Override
+    public Optional<ArticuloInventario> obtenerPorId(Long id) throws Exception {
+        return articuloInventarioDAO.findById(id);
+    }
     
 }
