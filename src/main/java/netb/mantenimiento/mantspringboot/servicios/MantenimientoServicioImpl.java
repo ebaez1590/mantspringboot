@@ -61,7 +61,7 @@ public class MantenimientoServicioImpl implements MantenimientoServicio {
     }
 
     @Override
-    public List<Mantenimiento> reporteEstado(String estado, Date fechaInicio, Date fechaFin) throws Exception {
+    public List<Mantenimiento> reporteEstado(Optional<String> estado, Date fechaInicio, Date fechaFin) throws Exception {
         return mantenimientoDAO.reporteEstado(estado, fechaInicio, fechaFin);
     }
 

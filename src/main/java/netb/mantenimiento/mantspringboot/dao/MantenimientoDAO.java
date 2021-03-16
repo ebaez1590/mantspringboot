@@ -30,12 +30,12 @@ public interface MantenimientoDAO extends PagingAndSortingRepository<Mantenimien
             @Param("cedulaTecnico") Optional<String> cedulaTecnico);
 
     //Reporte por estado y las fechas obligatorias
-    @Query("SELECT mt FROM Mantenimiento mt where mt.estado = :estado and "
-            + "mt.fechaIngreso between :fechaInicio and :fechaFin")
-    List<Mantenimiento> reporteEstado(@Param("estado") String estado, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin);
+    @Query("SELECT mt FROM Mantenimiento mt where mt.fechaIngreso between :fechaInicio and :fechaFin and "
+            + "(:estado is null or mt.estado = :estado)")
+    List<Mantenimiento> reporteEstado(@Param("estado") Optional<String> estado, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin);
 
     //Reporte por cedula_tecnico y las fechas obligatorias
-    @Query("SELECT mt FROM Mantenimiento mt where mt.cedulaTecnico like %:cedulaTecnico% and "
+    @Query("SELECT mt FROM Mantenimiento mt where mt.cedulaTecnico = :cedulaTecnico and "
             + "mt.fechaIngreso between :fechaInicio and :fechaFin")
     List<Mantenimiento> reporteCedula(@Param("cedulaTecnico") String cedulaTecnico, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin);
     
