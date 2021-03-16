@@ -25,6 +25,7 @@ public class MantenimientoSpringBootApplication {
         };
     }
 
+    /*
     @Bean
     ServletRegistrationBean jsfServletRegistration(ServletContext servletContext) {
         //spring boot only works if this is set
@@ -37,5 +38,6 @@ public class MantenimientoSpringBootApplication {
         srb.setLoadOnStartup(1);
         return srb;
     }
+    */
 
 }
