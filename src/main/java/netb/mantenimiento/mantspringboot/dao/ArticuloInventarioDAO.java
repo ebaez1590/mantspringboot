@@ -5,6 +5,7 @@
  */
 package netb.mantenimiento.mantspringboot.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.ArticuloInventario;
@@ -19,5 +20,19 @@ public interface ArticuloInventarioDAO extends PagingAndSortingRepository<Articu
     
     @Query("SELECT ar FROM ArticuloInventario ar where ar.nombre LIKE %:busqueda%")
     List<ArticuloInventario> articuloInventarioPorParametro(@Param("busqueda") Optional<String> busqueda, Pageable page);
+    
+    //Reporte de todos los articulos inventario por id de bodega inventraio y rango de fechas obligatorios
+    //localhost:8080/articulo-inventario/reporteBodega?bodegaInvId?fechaInicio?fechaFin
+    
+    @Query("SELECT ar FROM ArticuloInventario ar where ar.bodegaInventario.id = :bodegaInvId and "
+            + "ar.fechaCreacion between :fechaInicio and :fechaFin")
+    List<ArticuloInventario> articuloInventarioPorBodega(@Param("bodegaInvId") Long bodegaInvId, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin);
+    //reporte por id de articulo inventario, bodega inventario y por rango de fechas todos obligatorios
+    //localhost:8080/articulo-inventario/reporteArticuloInv?bodegaInvId?articuloInvId?fechaInicio?fechaFin
+    
+    @Query("SELECT ar FROM ArticuloInventario ar where ar.bodegaInventario.id = :bodegaInvId and "
+            + "ar.id = :articuloInvId and "
+            + "ar.fechaCreacion between :fechaInicio and :fechaFin")
+    List<ArticuloInventario> articuloInventarioPorArticuloInv(@Param("bodegaInvId") Long bodegaInvId, @Param("articuloInvId") Long articuloInvId, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin);
     
 }

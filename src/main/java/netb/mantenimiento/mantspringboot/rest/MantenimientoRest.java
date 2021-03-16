@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Mantenimiento;
 import netb.mantenimiento.mantspringboot.servicios.MantenimientoServicio;
+import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,23 +52,86 @@ public class MantenimientoRest {
     }
     
     @GetMapping
-    public ResponseEntity<List<Mantenimiento>> listar(
+    public ResponseEntity<RespuestaServicio> listar(
+            @RequestParam Long articuloInvId,
+            @RequestParam Optional<String> busqueda,
+            @RequestParam Optional<String> skip,
+            @RequestParam Optional<String> take) {
+        RespuestaServicio<Mantenimiento> mantenimientosRecuperados;
+        try {
+            String skipCast = "0";
+            String takeCast = "10";
+
+            if (skip.isPresent()) {
+                skipCast = skip.get();
+            }
+
+            if (take.isPresent()) {
+                takeCast = take.get();
+            }
+            
+            mantenimientosRecuperados = mantenimientoServicio.mantenimientoPorParametros(articuloInvId, busqueda, skipCast, takeCast);
+            return ResponseEntity.status(HttpStatus.OK).body(mantenimientosRecuperados);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
+        }
+
+    }
+    
+    @GetMapping("/reporteEstado")
+    public ResponseEntity<List<Mantenimiento>> reporteEstado(
+            @RequestParam String estado,
             @RequestParam String fechaInicio, 
-            @RequestParam String fechaFin, 
-            @RequestParam Optional<Long> articulo, 
-            @RequestParam Optional<String> estado, 
-            @RequestParam Optional<String> cedulaTecnico) {
+            @RequestParam String fechaFin) {
         List<Mantenimiento> reporteMantenimientos;
         try {
             Date fechaIniCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaInicio);
             Date fechaFinCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaFin);
             
-            reporteMantenimientos = mantenimientoServicio.reportesMantenimiento(fechaIniCast, fechaFinCast, articulo, estado, cedulaTecnico);
+            reporteMantenimientos = mantenimientoServicio.reporteEstado(estado, fechaIniCast, fechaFinCast);
             System.out.println("Reporte: " + reporteMantenimientos.get(0).getArticuloInventario().getNombre());
             return ResponseEntity.status(HttpStatus.OK).body(reporteMantenimientos);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
         }
-
+ 
+    }
+    
+    @GetMapping("/reporteCedula")
+    public ResponseEntity<List<Mantenimiento>> reporteCedula(
+            @RequestParam String cedulaTecnico, 
+            @RequestParam String fechaInicio, 
+            @RequestParam String fechaFin) {
+        List<Mantenimiento> reporteMantenimientos;
+        try {
+            Date fechaIniCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaInicio);
+            Date fechaFinCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaFin);
+            
+            reporteMantenimientos = mantenimientoServicio.reporteCedula(cedulaTecnico, fechaIniCast, fechaFinCast);
+            System.out.println("Reporte: " + reporteMantenimientos.get(0).getArticuloInventario().getNombre());
+            return ResponseEntity.status(HttpStatus.OK).body(reporteMantenimientos);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
+        }
+ 
+    }
+    
+    @GetMapping("/reporteArticuloInventario")
+    public ResponseEntity<List<Mantenimiento>> reporteArticuloInventario(
+            @RequestParam Long articuloInvId, 
+            @RequestParam String fechaInicio, 
+            @RequestParam String fechaFin) {
+        List<Mantenimiento> reporteMantenimientos;
+        try {
+            Date fechaIniCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaInicio);
+            Date fechaFinCast = new SimpleDateFormat("dd-MM-yyyy").parse(fechaFin);
+            
+            reporteMantenimientos = mantenimientoServicio.reporteArticuloInventario(articuloInvId, fechaIniCast, fechaFinCast);
+            System.out.println("Reporte: " + reporteMantenimientos.get(0).getArticuloInventario().getNombre());
+            return ResponseEntity.status(HttpStatus.OK).body(reporteMantenimientos);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
+        }
+ 
     }
 }

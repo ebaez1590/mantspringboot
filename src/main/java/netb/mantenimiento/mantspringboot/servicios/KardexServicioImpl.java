@@ -37,7 +37,4 @@ public class KardexServicioImpl implements KardexServicio{
         
     }
     
-    
-    
-    
 }

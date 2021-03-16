@@ -57,6 +57,12 @@ public class Mantenimiento implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaEntrega;
     
+    @Column
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date fechaTerminaMantenimiento;
+       
+    
     @Column     
     private String tipoMantenimiento;
     
@@ -156,6 +162,16 @@ public class Mantenimiento implements Serializable {
     public void setArticuloInventario(ArticuloInventario articuloInventario) {
         this.articuloInventario = articuloInventario;
     }
+
+    public Date getFechaTerminaMantenimiento() {
+        return fechaTerminaMantenimiento;
+    }
+
+    public void setFechaTerminaMantenimiento(Date fechaTerminaMantenimiento) {
+        this.fechaTerminaMantenimiento = fechaTerminaMantenimiento;
+    }
+    
+    
 
     
     

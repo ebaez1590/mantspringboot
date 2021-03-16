@@ -6,6 +6,7 @@
 package netb.mantenimiento.mantspringboot.servicios;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.Kardex;
 import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;

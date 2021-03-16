@@ -5,6 +5,8 @@
  */
 package netb.mantenimiento.mantspringboot.servicios;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.ArticuloInventario;
 import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
@@ -19,5 +21,11 @@ public interface ArticuloInventarioServicio {
     RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
     
     Optional<ArticuloInventario> obtenerPorId (Long id) throws Exception;
+    
+    //@Param("bodegaInvId") Long bodegaInvId, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin
+    List<ArticuloInventario> articuloInventarioPorBodega (Long bodegaInvId, Date fechaInicio, Date fechaFin) throws Exception;
+    
+    //@Param("bodegaInvId") Long bodegaInvId, @Param("articuloInvId") Long articuloInvId, @Param("fechaInicio"
+    List<ArticuloInventario> articuloInventarioPorArticuloInv (Long bodegaInvId, Long articuloInvId, Date fechaInicio, Date fechaFin) throws Exception;
     
 }
