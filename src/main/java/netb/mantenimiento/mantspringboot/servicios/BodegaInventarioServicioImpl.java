@@ -17,8 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BodegaInventarioServicioImpl implements BodegaInventarioServicio{
-    
+public class BodegaInventarioServicioImpl implements BodegaInventarioServicio {
+
     @Autowired
     private BodegaInventarioDAO bodegaInventarioDAO;
 
@@ -30,8 +30,23 @@ public class BodegaInventarioServicioImpl implements BodegaInventarioServicio{
 
     @Override
     public Boolean actualizarBodegaInventario(BodegaInventario bodegaInventario) throws Exception {
-        bodegaInventarioDAO.save(bodegaInventario);
-        return true;
+        boolean actualizar = false;
+        if (null != bodegaInventario) {
+            Long idBodInv = bodegaInventario.getId();
+            BodegaInventario objAux = bodegaInventarioDAO.findById(idBodInv).get();
+            if (null != objAux) {
+                objAux.setNombre((null != bodegaInventario.getNombre()) ? bodegaInventario.getNombre() : objAux.getNombre());
+                objAux.setDescripcion((null != bodegaInventario.getDescripcion()) ? bodegaInventario.getDescripcion() : objAux.getDescripcion());
+                objAux.setCodigo((null != bodegaInventario.getCodigo()) ? bodegaInventario.getCodigo() : objAux.getCodigo());
+                objAux.setHabilitado((null != bodegaInventario.getHabilitado()) ? bodegaInventario.getHabilitado() : objAux.getHabilitado());
+                objAux.setDireccion((null != bodegaInventario.getDireccion()) ? bodegaInventario.getDireccion() : objAux.getDireccion());
+                bodegaInventarioDAO.save(objAux);
+                actualizar = true;
+
+            }
+        }
+        return actualizar;
+
     }
 
     @Override
@@ -50,9 +65,9 @@ public class BodegaInventarioServicioImpl implements BodegaInventarioServicio{
             respuestaServicio.setListaObjetos(listBodegaInventario);
             respuestaServicio.setCantidadRegistros(bodegaInventarioDAO.count());
             return respuestaServicio;
-        }else {
+        } else {
             return null;
         }
     }
-    
+
 }

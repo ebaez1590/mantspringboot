@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class ArticuloInventario implements Serializable {
@@ -27,42 +32,52 @@ public class ArticuloInventario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column
     private String nombre;
-    
+
     @Column
     private Integer stock;
-    
+
     @Column
     private String descripcion;
-    
+
     @Column
     private String codigo;
-    
+
     @Column
     private String codigoAuxiliar;
-    
+
     @Column
     private Boolean habilitado;
-    
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date fechaCreacion;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_bodega_inv", nullable = false)
     @JsonBackReference("bodegaArt")
     private BodegaInventario bodegaInventario;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", nullable = false)
     @JsonBackReference("productoArt")
     private Producto producto;
-    
+
     @OneToMany(mappedBy = "articuloInventario", fetch = FetchType.LAZY)
     @JsonManagedReference("articuloInvK")
     private List<Kardex> kardexs;
-    
+
     @OneToMany(mappedBy = "articuloInventario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference("articuloInvM")
     private List<Mantenimiento> mantenimientos;
+
+    @PrePersist
+    public void prePersist() {
+        fechaCreacion = new Date();
+    }
 
     public ArticuloInventario() {
         mantenimientos = new ArrayList<Mantenimiento>();
@@ -155,12 +170,22 @@ public class ArticuloInventario implements Serializable {
     public void setMantenimientos(List<Mantenimiento> mantenimientos) {
         this.mantenimientos = mantenimientos;
     }
-    
-    public void addMantenimiento (Mantenimiento mantenimiento) {
+
+    public void addMantenimiento(Mantenimiento mantenimiento) {
         mantenimientos.add(mantenimiento);
     }
 
-    
-    
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticuloInventario{" + "id=" + id + ", nombre=" + nombre + ", stock=" + stock + ", descripcion=" + descripcion + ", codigo=" + codigo + ", codigoAuxiliar=" + codigoAuxiliar + ", habilitado=" + habilitado + '}';
+    }
 
 }

@@ -8,6 +8,7 @@ package netb.mantenimiento.mantspringboot.dao;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import netb.mantenimiento.mantspringboot.model.ArticuloInventario;
 import netb.mantenimiento.mantspringboot.model.Kardex;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
