@@ -16,60 +16,65 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Mantenimiento implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column
     private String nombreTecnico;
-    
+
     @Column
     private String cedulaTecnico;
-    
+
     @Column
     private String nombre;
-    
+
     @Column
     private String descripcion;
-    
+
     @Column
     private String estado;
-    
+
     @Column
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaIngreso;
-    
+
     @Column
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaIniciaMantenimiento;
-    
+
     @Column
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaEntrega;
-    
+
     @Column
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaTerminaMantenimiento;
-       
-    
-    @Column     
+
+    @Column
     private String tipoMantenimiento;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_art_invent", nullable = false)
     @JsonBackReference("articuloInvM")
     private ArticuloInventario articuloInventario;
+
+    @PrePersist
+    public void prePersist() {
+        fechaIngreso = new Date();
+    }
 
     public Mantenimiento() {
     }
@@ -82,7 +87,6 @@ public class Mantenimiento implements Serializable {
         this.id = id;
     }
 
-        
     public String getNombreTecnico() {
         return nombreTecnico;
     }
@@ -170,10 +174,5 @@ public class Mantenimiento implements Serializable {
     public void setFechaTerminaMantenimiento(Date fechaTerminaMantenimiento) {
         this.fechaTerminaMantenimiento = fechaTerminaMantenimiento;
     }
-    
-    
 
-    
-    
-    
 }
