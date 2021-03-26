@@ -18,7 +18,7 @@ public interface ArticuloInventarioServicio {
     
     Boolean actualizarArticuloInventario(ArticuloInventario articuloInventario) throws Exception;
     
-    RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
+    RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros (Optional<String> busqueda, Long idBodegaInventario, String skip, String take) throws Exception;
     
     Optional<ArticuloInventario> obtenerPorId (Long id) throws Exception;
     

@@ -56,12 +56,12 @@ public class BodegaInventarioServicioImpl implements BodegaInventarioServicio {
     }
 
     @Override
-    public RespuestaServicio<BodegaInventario> bodegaInventarioPorParametros(Optional<String> busqueda, String skip, String take) throws Exception {
+    public RespuestaServicio<BodegaInventario> bodegaInventarioPorParametros(Optional<String> busqueda, Long idDepartamento, String skip, String take) throws Exception {
         Pageable sortedById = PageRequest.of(Integer.parseInt(skip), Integer.parseInt(take), Sort.by("id").descending());
         RespuestaServicio<BodegaInventario> respuestaServicio = new RespuestaServicio<BodegaInventario>();
         List<BodegaInventario> listBodegaInventario = null;
         if (busqueda.isPresent()) {
-            listBodegaInventario = bodegaInventarioDAO.bodegaInventarioPorParametro(busqueda, sortedById);
+            listBodegaInventario = bodegaInventarioDAO.bodegaInventarioPorParametro(busqueda, idDepartamento, sortedById);
             respuestaServicio.setListaObjetos(listBodegaInventario);
             respuestaServicio.setCantidadRegistros(bodegaInventarioDAO.count());
             return respuestaServicio;

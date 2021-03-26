@@ -53,6 +53,7 @@ public class ArticuloInventarioRest {
 
     @GetMapping
     public ResponseEntity<RespuestaServicio> listar(@RequestParam Optional<String> busqueda,
+            @RequestParam Long idBodegaInventario,
             @RequestParam Optional<String> skip,
             @RequestParam Optional<String> take) {
         RespuestaServicio<ArticuloInventario> articulosInventarioRecuperados;
@@ -67,7 +68,7 @@ public class ArticuloInventarioRest {
             if (take.isPresent()) {
                 takeCast = take.get();
             }
-            articulosInventarioRecuperados = articuloInventarioServicio.articuloInventarioPorParametros(busqueda, skipCast, takeCast);
+            articulosInventarioRecuperados = articuloInventarioServicio.articuloInventarioPorParametros(busqueda, idBodegaInventario, skipCast, takeCast);
             return ResponseEntity.status(HttpStatus.OK).body(articulosInventarioRecuperados);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);

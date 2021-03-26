@@ -53,12 +53,12 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
     }
 
     @Override
-    public RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros(Optional<String> busqueda, String skip, String take) throws Exception {
+    public RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros(Optional<String> busqueda, Long idBodegaInventario, String skip, String take) throws Exception {
         Pageable sortedById = PageRequest.of(Integer.parseInt(skip), Integer.parseInt(take), Sort.by("id").descending());
         RespuestaServicio<ArticuloInventario> respuestaServicio = new RespuestaServicio<ArticuloInventario>();
         List<ArticuloInventario> listArticuloInventario = null;
         if (busqueda.isPresent()) {
-            listArticuloInventario = articuloInventarioDAO.articuloInventarioPorParametro(busqueda, sortedById);
+            listArticuloInventario = articuloInventarioDAO.articuloInventarioPorParametro(busqueda, idBodegaInventario, sortedById);
             respuestaServicio.setListaObjetos(listArticuloInventario);
             respuestaServicio.setCantidadRegistros(articuloInventarioDAO.count());
             return respuestaServicio;

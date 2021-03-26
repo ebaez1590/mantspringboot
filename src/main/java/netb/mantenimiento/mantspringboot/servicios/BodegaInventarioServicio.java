@@ -18,6 +18,6 @@ public interface BodegaInventarioServicio {
     
     Boolean eliminarBodegaInventarioPorId(Long Id) throws Exception;
     
-    RespuestaServicio<BodegaInventario> bodegaInventarioPorParametros (Optional<String> busqueda, String skip, String take) throws Exception;
+    RespuestaServicio<BodegaInventario> bodegaInventarioPorParametros (Optional<String> busqueda, Long idDepartamento, String skip, String take) throws Exception;
     
 }
