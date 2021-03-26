@@ -51,7 +51,7 @@ public class KardexRest {
                     } else {
                         Integer stockActual = articuloAux.getStock();
                         if ((stockActual - stock) < 0) {
-                            return false;
+                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el Kardex");
                         } else {
                             articuloAux.setStock(stockActual - stock);
                             System.out.println("Articulo Inventario Modificado: " + articuloAux.toString());
