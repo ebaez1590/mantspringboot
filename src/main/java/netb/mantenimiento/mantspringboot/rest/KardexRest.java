@@ -42,19 +42,26 @@ public class KardexRest {
             if (null != (kardex.getArticuloInventario()) && null != (kardex.getArticuloInventario().getId())) {
                 Long idArtInv = kardex.getArticuloInventario().getId();
                 Integer stock = kardex.getCantidad();
-                kardexServicio.ingresosEgresos(kardex);
+                
                 ArticuloInventario articuloAux = articuloInventarioServicio.obtenerPorId(idArtInv).get();
                 if (null != articuloAux) {
                     System.out.println("Articulo Inventario Recuperado: " + articuloAux.toString());
                     if (kardex.getSuma()) {
                         articuloAux.setStock(Integer.sum(articuloAux.getStock(), stock));
-                    }else {
-                        articuloAux.setStock(articuloAux.getStock() - stock);
+                    } else {
+                        Integer stockActual = articuloAux.getStock();
+                        if ((stockActual - stock) < 0) {
+                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible guardar el Kardex");
+                        } else {
+                            articuloAux.setStock(stockActual - stock);
+                            System.out.println("Articulo Inventario Modificado: " + articuloAux.toString());
+                            kardexServicio.ingresosEgresos(kardex);
+                            articuloInventarioServicio.actualizarArticuloInventario(articuloAux);
+                            actualiza = true;
+                        }
+
                     }
-                    
-                    System.out.println("Articulo Inventario Modificado: " + articuloAux.toString());
-                    articuloInventarioServicio.actualizarArticuloInventario(articuloAux);
-                    actualiza = true;
+
                 }
 
             }
