@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.dao.ArticuloInventarioDAO;
+import netb.mantenimiento.mantspringboot.dao.TipoBodegaDAO;
 import netb.mantenimiento.mantspringboot.model.ArticuloInventario;
+import netb.mantenimiento.mantspringboot.model.TipoBodega;
 import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,9 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
 
     @Autowired
     private ArticuloInventarioDAO articuloInventarioDAO;
+    
+    @Autowired
+    private TipoBodegaDAO tipoBodegaDAO;
 
     @Override
     public Boolean guardarArticuloInventario(ArticuloInventario articuloInventario) throws Exception {
@@ -59,6 +64,9 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
         List<ArticuloInventario> listArticuloInventario = null;
         if (busqueda.isPresent()) {
             listArticuloInventario = articuloInventarioDAO.articuloInventarioPorParametro(busqueda, idBodegaInventario, sortedById);
+            for (ArticuloInventario articuloInventario : listArticuloInventario) {
+                articuloInventario.setTipoBodegaId(articuloInventario.getBodegaInventario().getTipoBodega().getId());
+            }
             respuestaServicio.setListaObjetos(listArticuloInventario);
             respuestaServicio.setCantidadRegistros(articuloInventarioDAO.count());
             return respuestaServicio;

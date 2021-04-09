@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -73,6 +74,9 @@ public class ArticuloInventario implements Serializable {
     @OneToMany(mappedBy = "articuloInventario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference("articuloInvM")
     private List<Mantenimiento> mantenimientos;
+    
+    @Transient
+    private Long tipoBodegaId;
 
     @PrePersist
     public void prePersist() {
@@ -182,6 +186,16 @@ public class ArticuloInventario implements Serializable {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+    public Long getTipoBodegaId() {
+        return tipoBodegaId;
+    }
+
+    public void setTipoBodegaId(Long tipoBodegaId) {
+        this.tipoBodegaId = tipoBodegaId;
+    }
+    
+    
 
     @Override
     public String toString() {
