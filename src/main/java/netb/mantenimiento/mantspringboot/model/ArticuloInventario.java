@@ -75,8 +75,6 @@ public class ArticuloInventario implements Serializable {
     @JsonManagedReference("articuloInvM")
     private List<Mantenimiento> mantenimientos;
     
-    @Transient
-    private Long tipoBodegaId;
 
     @PrePersist
     public void prePersist() {
@@ -186,16 +184,6 @@ public class ArticuloInventario implements Serializable {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-
-    public Long getTipoBodegaId() {
-        return tipoBodegaId;
-    }
-
-    public void setTipoBodegaId(Long tipoBodegaId) {
-        this.tipoBodegaId = tipoBodegaId;
-    }
-    
-    
 
     @Override
     public String toString() {

@@ -70,4 +70,9 @@ public class BodegaInventarioServicioImpl implements BodegaInventarioServicio {
         }
     }
 
+    @Override
+    public Object bodegaInventarioPorId(Long idBodegaInventario) throws Exception {
+        return bodegaInventarioDAO.bodegaInventarioPorId(idBodegaInventario);
+    }
+
 }

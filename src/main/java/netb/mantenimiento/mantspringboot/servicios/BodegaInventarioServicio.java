@@ -20,4 +20,6 @@ public interface BodegaInventarioServicio {
     
     RespuestaServicio<BodegaInventario> bodegaInventarioPorParametros (Optional<String> busqueda, Long idDepartamento, String skip, String take) throws Exception;
     
+    Object bodegaInventarioPorId (Long idBodegaInventario) throws Exception;
+    
 }

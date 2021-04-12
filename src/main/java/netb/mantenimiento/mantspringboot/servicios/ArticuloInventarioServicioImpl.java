@@ -24,9 +24,6 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
 
     @Autowired
     private ArticuloInventarioDAO articuloInventarioDAO;
-    
-    @Autowired
-    private TipoBodegaDAO tipoBodegaDAO;
 
     @Override
     public Boolean guardarArticuloInventario(ArticuloInventario articuloInventario) throws Exception {
@@ -64,9 +61,6 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
         List<ArticuloInventario> listArticuloInventario = null;
         if (busqueda.isPresent()) {
             listArticuloInventario = articuloInventarioDAO.articuloInventarioPorParametro(busqueda, idBodegaInventario, sortedById);
-            for (ArticuloInventario articuloInventario : listArticuloInventario) {
-                articuloInventario.setTipoBodegaId(articuloInventario.getBodegaInventario().getTipoBodega().getId());
-            }
             respuestaServicio.setListaObjetos(listArticuloInventario);
             respuestaServicio.setCantidadRegistros(articuloInventarioDAO.count());
             return respuestaServicio;
