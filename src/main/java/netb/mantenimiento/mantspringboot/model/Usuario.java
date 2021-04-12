@@ -51,6 +51,9 @@ public class Usuario implements Serializable {
     
     @Column
     private boolean verReporte;
+    
+    @Column
+    private boolean gestionaUsuarios;
 
     public Long getId() {
         return id;
@@ -147,6 +150,15 @@ public class Usuario implements Serializable {
     public void setVerReporte(boolean verReporte) {
         this.verReporte = verReporte;
     }
+
+    public boolean isGestionaUsuarios() {
+        return gestionaUsuarios;
+    }
+
+    public void setGestionaUsuarios(boolean gestionaUsuarios) {
+        this.gestionaUsuarios = gestionaUsuarios;
+    }
+        
 
     @Override
     public String toString() {

@@ -5,9 +5,12 @@
  */
 package netb.mantenimiento.mantspringboot.rest;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Optional;
 import netb.mantenimiento.mantspringboot.model.BodegaInventario;
 import netb.mantenimiento.mantspringboot.servicios.BodegaInventarioServicio;
+import netb.mantenimiento.mantspringboot.utils.RespuestaBodega;
 import netb.mantenimiento.mantspringboot.utils.RespuestaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +51,6 @@ public class BodegaInventarioRest {
         }
     }
 
-
     @GetMapping
     public ResponseEntity<RespuestaServicio> listar(@RequestParam Optional<String> busqueda,
             @RequestParam Long idDepartamento,
@@ -72,6 +74,24 @@ public class BodegaInventarioRest {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
         }
 
+    }
+
+    @GetMapping("/bodegaInventarioPorId")
+    public ResponseEntity<RespuestaBodega> bodegaInventarioPorId(@RequestParam Long idBodegaInventario) {
+        try {
+            Object bodega = bodegaInventarioServicio.bodegaInventarioPorId(idBodegaInventario);
+            RespuestaBodega respuestaBodega = new RespuestaBodega();
+            if (null != bodega) {
+                Object[] arreglo = (Object[]) bodega;
+                respuestaBodega.setNombre(arreglo[0].toString());
+                respuestaBodega.setDescripcion(arreglo[1].toString());
+                respuestaBodega.setEsMantenimiento((Boolean)arreglo[2]);
+
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(respuestaBodega);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);
+        }
     }
 
 }
