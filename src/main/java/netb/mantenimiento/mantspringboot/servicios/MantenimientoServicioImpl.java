@@ -76,12 +76,12 @@ public class MantenimientoServicioImpl implements MantenimientoServicio {
     }
 
     @Override
-    public RespuestaServicio<Mantenimiento> mantenimientoPorParametros(Long articuloInvId, Optional<String> busqueda, String skip, String take) throws Exception {
+    public RespuestaServicio<Mantenimiento> mantenimientoPorParametros(Long articuloInvId, Optional<String> estado, Optional<String> busqueda, String skip, String take) throws Exception {
         Pageable sortedById = PageRequest.of(Integer.parseInt(skip), Integer.parseInt(take), Sort.by("id").descending());
         RespuestaServicio<Mantenimiento> respuestaServicio = new RespuestaServicio<Mantenimiento>();
         List<Mantenimiento> listMantenimientos = null;
         if (busqueda.isPresent()) {
-            listMantenimientos = mantenimientoDAO.mantenimientoPorParametros(articuloInvId, busqueda, sortedById);
+            listMantenimientos = mantenimientoDAO.mantenimientoPorParametros(articuloInvId, estado, busqueda, sortedById);
             respuestaServicio.setListaObjetos(listMantenimientos);
             respuestaServicio.setCantidadRegistros(mantenimientoDAO.count());
             return respuestaServicio;

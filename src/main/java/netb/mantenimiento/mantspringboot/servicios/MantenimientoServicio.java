@@ -25,6 +25,6 @@ public interface MantenimientoServicio {
     //@Param("articuloInvId") Long articuloInvId, @Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin
     List<Mantenimiento> reporteArticuloInventario (Long articuloInvId, Date fechaInicio, Date fechaFin) throws Exception;
     
-    RespuestaServicio<Mantenimiento> mantenimientoPorParametros (Long articuloInvId, Optional<String> busqueda, String skip, String take) throws Exception;
+    RespuestaServicio<Mantenimiento> mantenimientoPorParametros (Long articuloInvId, Optional<String> estado, Optional<String> busqueda, String skip, String take) throws Exception;
 
 }

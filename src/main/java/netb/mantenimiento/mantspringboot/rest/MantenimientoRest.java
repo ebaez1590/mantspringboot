@@ -54,6 +54,7 @@ public class MantenimientoRest {
     @GetMapping
     public ResponseEntity<RespuestaServicio> listar(
             @RequestParam Long articuloInvId,
+            @RequestParam Optional<String> estado,
             @RequestParam Optional<String> busqueda,
             @RequestParam Optional<String> skip,
             @RequestParam Optional<String> take) {
@@ -70,7 +71,7 @@ public class MantenimientoRest {
                 takeCast = take.get();
             }
             
-            mantenimientosRecuperados = mantenimientoServicio.mantenimientoPorParametros(articuloInvId, busqueda, skipCast, takeCast);
+            mantenimientosRecuperados = mantenimientoServicio.mantenimientoPorParametros(articuloInvId, estado, busqueda, skipCast, takeCast);
             return ResponseEntity.status(HttpStatus.OK).body(mantenimientosRecuperados);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existen Registros", ex);

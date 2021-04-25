@@ -46,7 +46,8 @@ public interface MantenimientoDAO extends PagingAndSortingRepository<Mantenimien
     
 
     @Query("SELECT mt FROM Mantenimiento mt where mt.articuloInventario.id = :articuloInvId and "
+            + "(:estado is null or mt.estado = :estado) and "
             + "(:busqueda is null or mt.nombreTecnico like %:busqueda%)")
-    List<Mantenimiento> mantenimientoPorParametros(@Param("articuloInvId") Long articuloInvId, @Param("busqueda") Optional<String> busqueda, Pageable page);
+    List<Mantenimiento> mantenimientoPorParametros(@Param("articuloInvId") Long articuloInvId, @Param("estado") Optional<String> estado, @Param("busqueda") Optional<String> busqueda, Pageable page);
 
 }
