@@ -45,6 +45,7 @@ public class MantenimientoServicioImpl implements MantenimientoServicio {
                 objAux.setFechaEntrega((null != mantenimiento.getFechaEntrega()) ? mantenimiento.getFechaEntrega() : objAux.getFechaEntrega());
                 objAux.setFechaTerminaMantenimiento((null != mantenimiento.getFechaTerminaMantenimiento()) ? mantenimiento.getFechaTerminaMantenimiento() : objAux.getFechaTerminaMantenimiento());
                 objAux.setTipoMantenimiento((null != mantenimiento.getTipoMantenimiento()) ? mantenimiento.getTipoMantenimiento() : objAux.getTipoMantenimiento());
+                objAux.setDescripcion((null != mantenimiento.getDescripcion()) ? mantenimiento.getDescripcion(): objAux.getDescripcion());
                 mantenimientoDAO.save(objAux);
                 actualizar = true;
                 
