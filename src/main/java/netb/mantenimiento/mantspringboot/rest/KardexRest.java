@@ -46,8 +46,13 @@ public class KardexRest {
                 ArticuloInventario articuloAux = articuloInventarioServicio.obtenerPorId(idArtInv).get();
                 if (null != articuloAux) {
                     System.out.println("Articulo Inventario Recuperado: " + articuloAux.toString());
+                    System.out.println("Boolean Suma: " + kardex.getSuma());
                     if (kardex.getSuma()) {
                         articuloAux.setStock(Integer.sum(articuloAux.getStock(), stock));
+                        kardexServicio.ingresosEgresos(kardex);
+                            articuloInventarioServicio.actualizarArticuloInventario(articuloAux);
+                            actualiza = true;
+                            System.out.println("articuloAux.Stock: " + articuloAux.getStock());
                     } else {
                         Integer stockActual = articuloAux.getStock();
                         if ((stockActual - stock) < 0) {
