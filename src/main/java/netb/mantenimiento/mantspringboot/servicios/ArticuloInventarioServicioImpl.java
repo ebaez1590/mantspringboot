@@ -55,7 +55,7 @@ public class ArticuloInventarioServicioImpl implements ArticuloInventarioServici
     }
 
     @Override
-    public RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros(Optional<String> busqueda, Long idBodegaInventario, String skip, String take) throws Exception {
+    public RespuestaServicio<ArticuloInventario> articuloInventarioPorParametros(Optional<String> busqueda, Optional<Long> idBodegaInventario, String skip, String take) throws Exception {
         Pageable sortedById = PageRequest.of(Integer.parseInt(skip), Integer.parseInt(take), Sort.by("id").descending());
         RespuestaServicio<ArticuloInventario> respuestaServicio = new RespuestaServicio<ArticuloInventario>();
         List<ArticuloInventario> listArticuloInventario = null;

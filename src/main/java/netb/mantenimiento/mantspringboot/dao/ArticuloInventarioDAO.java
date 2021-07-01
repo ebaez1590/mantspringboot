@@ -18,8 +18,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArticuloInventarioDAO extends PagingAndSortingRepository<ArticuloInventario, Long>{
     
-    @Query("SELECT ar FROM ArticuloInventario ar where ar.bodegaInventario.id = :idBodegaInventario and  ar.nombre LIKE %:busqueda%")
-    List<ArticuloInventario> articuloInventarioPorParametro(@Param("busqueda") Optional<String> busqueda, @Param("idBodegaInventario") Long idBodegaInventario, Pageable page);
+    @Query("SELECT ar FROM ArticuloInventario ar where "
+            + "(:idBodegaInventario is null or ar.bodegaInventario.id = :idBodegaInventario) and "
+            + "(:busqueda is null or ar.nombre LIKE %:busqueda%)")
+    List<ArticuloInventario> articuloInventarioPorParametro(@Param("busqueda") Optional<String> busqueda, @Param("idBodegaInventario") Optional<Long> idBodegaInventario, Pageable page);
     
     //Reporte de todos los articulos inventario por id de bodega inventraio y rango de fechas obligatorios
     //localhost:8080/articulo-inventario/reporteBodega?bodegaInvId?fechaInicio?fechaFin

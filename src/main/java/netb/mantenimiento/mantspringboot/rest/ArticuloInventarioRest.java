@@ -53,7 +53,7 @@ public class ArticuloInventarioRest {
 
     @GetMapping
     public ResponseEntity<RespuestaServicio> listar(@RequestParam Optional<String> busqueda,
-            @RequestParam Long idBodegaInventario,
+            @RequestParam Optional<Long> idBodegaInventario,
             @RequestParam Optional<String> skip,
             @RequestParam Optional<String> take) {
         RespuestaServicio<ArticuloInventario> articulosInventarioRecuperados;
